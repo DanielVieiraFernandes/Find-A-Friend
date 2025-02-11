@@ -36,7 +36,7 @@ model Pet {
   @@map("pets")
 }
 
-model Org {
+model Org { 
   id          String  @id @default(uuid())
   name        String
   address     String
