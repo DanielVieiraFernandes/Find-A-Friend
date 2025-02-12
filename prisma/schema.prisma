@@ -24,41 +24,39 @@ enum Role {
 }
 
 model Pet {
-  id           String     @id @default(uuid())
+  id           String    @id @default(uuid())
   name         String
   specie       Specie
   breed        String
   description  String
   age          Int
   adoptionDate DateTime?
-  org          Org        @relation(fields: [org_id], references: [id])
+  org          Org       @relation(fields: [org_id], references: [id])
   org_id       String
-  created_at   DateTime   @default(now())
-  Location     Location[]
+  created_at   DateTime  @default(now())
 
   @@map("pets")
 }
 
-model Location {
-  id     String @id @default(uuid())
-  city   String
-  addres String
-  org    Org    @relation(fields: [org_id], references: [id])
-  org_id String
-  pets   Pet    @relation(fields: [pet_id], references: [id])
-  pet_id String
-}
-
 model Org {
-  id          String     @id @default(uuid())
+  id          String    @id @default(uuid())
   name        String
-  address     String
   phone       String
   description String?
-  created_at  DateTime   @default(now())
-  role        Role       @default(NOAUTHORIZED)
+  created_at  DateTime  @default(now())
+  role        Role      @default(NOAUTHORIZED)
   Pets        Pet[]
-  Location    Location[]
+  location    Location?
 
   @@map("orgs")
+}
+
+model Location {
+  id      String @id @unique @default(uuid())
+  city    String
+  address String
+  org     Org    @relation(fields: [org_id], references: [id])
+  org_id  String @unique
+
+  @@map("locations")
 }

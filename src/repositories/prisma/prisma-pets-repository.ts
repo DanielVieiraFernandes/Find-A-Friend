@@ -8,6 +8,17 @@ export class PrismaPetsRepository implements PetsRepository {
             data
         })
 
+        // const pets = await prisma.pet.findMany({
+        //     where:{
+        //         org:{
+        //             location:{
+        //                 city:'Hortolândia'
+        //             }
+        //         }
+        //     }
+        // })
+        // Assim que vou retornar com base na cidade
+        
         return pet;
     }
 }
