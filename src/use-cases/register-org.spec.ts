@@ -22,7 +22,7 @@ describe('Register Org Test', () => {
         })
 
         console.log(org);
-        
+
         expect(org.id).toEqual(expect.any(String));
     })
 }
