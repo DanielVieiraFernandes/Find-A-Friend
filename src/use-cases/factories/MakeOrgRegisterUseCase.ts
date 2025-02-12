@@ -1,9 +1,9 @@
-import { InMemoryOrgRepository } from "@/repositories/in-memory/in-memory-org-repository";
 import { RegisterOrgUseCase } from "../register-org";
+import { PrismaOrgsRepository } from "@/repositories/prisma/prisma-orgs-repository";
 
 export function MakeOrgRegisterUseCase() {
-    const inMemoryOrgRepository = new InMemoryOrgRepository();
-    const orgUseCase = new RegisterOrgUseCase(inMemoryOrgRepository);
+    const prismaOrgRepository = new PrismaOrgsRepository();
+    const orgUseCase = new RegisterOrgUseCase(prismaOrgRepository);
 
     return orgUseCase;
 }

@@ -21,7 +21,6 @@ describe('Register Org Test', () => {
             phone: '1988947829384'
         })
 
-        console.log(org);
 
         expect(org.id).toEqual(expect.any(String));
     })

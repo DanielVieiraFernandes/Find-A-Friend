@@ -6,7 +6,7 @@ export class InMemoryPetRepository implements PetsRepository {
 
     public pets: Pet[] = [];
 
-    async create(data:Prisma.PetCreateInput, orgId: string){
+    async create(data:Prisma.PetUncheckedCreateInput){
 
        const pet:Pet = {
         id: randomUUID(),
@@ -14,7 +14,7 @@ export class InMemoryPetRepository implements PetsRepository {
         breed: data.breed,
         description: data.description,
         name: data.name,
-        org_id: orgId,
+        org_id: data.org_id,
         specie: data.specie
        }
 

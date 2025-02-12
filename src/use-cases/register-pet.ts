@@ -24,8 +24,7 @@ export class RegisterPetUseCase {
   }: RegisterPetUseCaseRequest): Promise<RegisterPetUseCaseResponse> {
     try {
       const pet = await this.petsRepository.create(
-        { specie, breed, description, name, org: {} },
-        orgId
+        {specie,breed,description,name, org_id: orgId }
       );
       return {
         pet,
