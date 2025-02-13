@@ -2,10 +2,9 @@ import "@fastify/jwt"
 
 declare module "@fastify/jwt" {
     export interface FastifyJWT {
-        org: {
+        user: {
             sub: string;
-            role: 'NOAUTHORIZED' | 'ADMIN'
-
+            role: 'USER' | 'ADMIN'
         },
     }
 }

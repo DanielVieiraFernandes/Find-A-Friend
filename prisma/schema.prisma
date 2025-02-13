@@ -19,8 +19,30 @@ enum Specie {
 }
 
 enum Role {
-  NOAUTHORIZED
+  USER
   ADMIN
+}
+
+enum Sex {
+  MALE
+  FEMALE
+  OTHER
+}
+
+model User {
+  id            String    @id @default(uuid())
+  name          String
+  email         String    @unique
+  age           String
+  password_hash String
+  sex           Sex?
+  address       String
+  city          String
+  role          Role      @default(USER)
+  created_at    DateTime  @default(now())
+  updated_at    DateTime?
+
+  @@map("users")
 }
 
 model Pet {
@@ -39,26 +61,17 @@ model Pet {
 }
 
 model Org {
-  id            String    @id @default(uuid())
+  id            String   @id @default(uuid())
   name          String
-  email         String    @unique
-  phone         String    @unique
+  email         String   @unique
+  phone         String   @unique
   password_hash String
   description   String?
-  created_at    DateTime  @default(now())
-  role          Role      @default(NOAUTHORIZED)
+  created_at    DateTime @default(now())
+  role          Role     @default(ADMIN)
   Pets          Pet[]
-  location      Location?
+  city          String
+  address       String
 
   @@map("orgs")
-}
-
-model Location {
-  id      String @id @default(uuid())
-  city    String
-  address String
-  org     Org    @relation(fields: [org_id], references: [id])
-  org_id  String @unique
-
-  @@map("locations")
 }
