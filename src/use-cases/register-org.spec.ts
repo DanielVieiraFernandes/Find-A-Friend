@@ -20,7 +20,9 @@ describe('Register Org Test', () => {
             description: 'Tanto faz',
             name: 'Daniel',
             phone: '1988947829384',
-            password: '123456'
+            password: '123456',
+            address: 'Rua nnfjsndfjnsdjf',
+            city: 'Hortolândia'
         })
 
 
@@ -34,7 +36,9 @@ describe('Register Org Test', () => {
             name: 'Daniel',
             phone: '1988947829384',
             password: '123456',
-            email: 'Daniel@gmail.com'
+            email: 'Daniel@gmail.com',
+            address: 'Rua nnfjsndfjnsdjf',
+            city: 'Hortolândia'
         })
 
 
@@ -43,7 +47,9 @@ describe('Register Org Test', () => {
             description: 'Tanto faz',
             name: 'Daniel',
             phone: '1988947829384',
-            password: '123456'
+            password: '123456',
+            address: 'Rua nnfjsndfjnsdjf',
+            city: 'Hortolândia'
         })).rejects.toBeInstanceOf(OrgHaveExistsError);
     })
 
@@ -55,7 +61,9 @@ describe('Register Org Test', () => {
             name: 'Daniel',
             phone: '1988947829374',
             password: '123456',
-            email: 'Daniel@gmail.com'
+            email: 'Daniel@gmail.com',
+            address: 'Rua nnfjsndfjnsdjf',
+            city: 'Hortolândia'
         })
 
 
@@ -64,7 +72,9 @@ describe('Register Org Test', () => {
             description: 'Tanto faz',
             name: 'Daniel',
             phone: '1988947829384',
-            password: '123456'
+            password: '123456',
+            address: 'Rua nnfjsndfjnsdjf',
+            city: 'Hortolândia'
         })).rejects.toBeInstanceOf(OrgHaveExistsError);
     })
 }

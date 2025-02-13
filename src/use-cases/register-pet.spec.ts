@@ -18,15 +18,12 @@ describe('Register Pet Test', () => {
     it('Should be able register Org', async () => {
 
         const org = await orgRepository.create({
-            location:{
-                create:{
-                    address: 'Rua tantantan',
-                    city: 'Hortolândia',
-                }
-            },
+            address: '',
+            city: '',
             name: 'Org',
             phone: '19989993437',
-            password_hash: '123456'
+            password_hash: '123456',
+            email: 'daniel@gmail.com'
         })
 
         const {pet} = await sut.execute({

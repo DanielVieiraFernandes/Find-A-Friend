@@ -14,8 +14,10 @@ export class InMemoryOrgRepository implements OrgRepository {
             description: data.description ?? null,
             name: data.name,
             phone: data.phone,
-            role: data.role ?? 'NOAUTHORIZED',
-            password_hash: '123456'
+            role: data.role ?? 'ADMIN',
+            password_hash: '123456',
+            address: data.address,
+            city: data.address,
         } 
 
         this.orgs.push(org);

@@ -1,4 +1,4 @@
-import { PetsRepository } from "@/repositories/pets-repository";
+import { PetsRepository } from "../repositories/pets-repository";
 import { Pet } from "@prisma/client";
 
 interface RegisterPetUseCaseRequest {
@@ -26,7 +26,7 @@ export class RegisterPetUseCase {
   }: RegisterPetUseCaseRequest): Promise<RegisterPetUseCaseResponse> {
     try {
       const pet = await this.petsRepository.create(
-        {specie,breed,description,name, org_id: orgId,age,}
+        {specie,breed,description,name, org_id: orgId,age, }
       );
       return {
         pet,
