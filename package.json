@@ -2,12 +2,12 @@
   "name": "Desafio03-FindAFriendAPI",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "module",
   "license": "MIT",
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "test": "vitest run --dir src/use-cases",
-    "test:watch": "vitest --dir src/use-cases"
+    "test:watch": "vitest --dir src/use-cases",
+    "build": "tsup src --out-dir build"
   },
   "devDependencies": {
     "@eslint/js": "9.19.0",

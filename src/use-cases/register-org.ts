@@ -1,11 +1,14 @@
 import { OrgRepository } from "@/repositories/orgs-repository";
 import { Prisma, Org } from "@prisma/client";
+import { hash } from "bcryptjs";
+import { OrgHaveExistsError } from "./errors/org-have-exists-error";
 
 interface RegisterOrgUseCaseRequest {
   name: string;
-  address: string;
+  email: string;
   phone: string;
   description: string | null;
+  password: string;
 }
 
 interface RegisterOrgUseCaseResponse {
@@ -16,17 +19,29 @@ export class RegisterOrgUseCase {
   constructor(private orgRepository: OrgRepository) {}
 
   async execute({
-    address,
+    email,
     description,
     name,
     phone,
+    password
   }: RegisterOrgUseCaseRequest): Promise<RegisterOrgUseCaseResponse> {
     try {
+
+      const existPhone = await this.orgRepository.findByPhone(phone);
+      const existEmail = await this.orgRepository.findByEmail(email);
+
+      if(existPhone || existEmail){
+        throw new OrgHaveExistsError();
+      }
+
+      const password_hash = await hash(password, 6);
+
       const org = await this.orgRepository.create({
-        address,
         name,
         phone,
         description,
+        password_hash,
+        email
       });
 
       return {

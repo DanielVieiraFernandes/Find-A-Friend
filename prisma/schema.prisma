@@ -39,20 +39,22 @@ model Pet {
 }
 
 model Org {
-  id          String    @id @default(uuid())
-  name        String
-  phone       String
-  description String?
-  created_at  DateTime  @default(now())
-  role        Role      @default(NOAUTHORIZED)
-  Pets        Pet[]
-  location    Location?
+  id            String    @id @default(uuid())
+  name          String
+  email         String    @unique
+  phone         String    @unique
+  password_hash String
+  description   String?
+  created_at    DateTime  @default(now())
+  role          Role      @default(NOAUTHORIZED)
+  Pets          Pet[]
+  location      Location?
 
   @@map("orgs")
 }
 
 model Location {
-  id      String @id @unique @default(uuid())
+  id      String @id @default(uuid())
   city    String
   address String
   org     Org    @relation(fields: [org_id], references: [id])

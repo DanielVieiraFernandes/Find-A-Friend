@@ -5,7 +5,7 @@ import { PetsRepository } from "../pets-repository";
 export class PrismaPetsRepository implements PetsRepository {
     async create(data: Prisma.PetUncheckedCreateInput) {
         const pet = await prisma.pet.create({
-            data
+            data,
         })
 
         // const pets = await prisma.pet.findMany({

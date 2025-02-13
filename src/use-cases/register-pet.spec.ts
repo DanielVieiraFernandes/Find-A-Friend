@@ -17,10 +17,16 @@ describe('Register Pet Test', () => {
 
     it('Should be able register Org', async () => {
 
-        const {id} = await orgRepository.create({
-            address: 'nfioan',
+        const org = await orgRepository.create({
+            location:{
+                create:{
+                    address: 'Rua tantantan',
+                    city: 'Hortolândia',
+                }
+            },
             name: 'Org',
             phone: '19989993437',
+            password_hash: '123456'
         })
 
         const {pet} = await sut.execute({
@@ -28,7 +34,8 @@ describe('Register Pet Test', () => {
             name: 'Daniel',
             breed: "Golden",
             specie: "DOG",
-            orgId: id 
+            orgId: org.id,
+            age: 17
         })
 
         console.log(pet);

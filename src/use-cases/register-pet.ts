@@ -7,6 +7,7 @@ interface RegisterPetUseCaseRequest {
   breed: string;
   description: string;
   orgId: string;
+  age: number;
 }
 
 interface RegisterPetUseCaseResponse {
@@ -21,10 +22,11 @@ export class RegisterPetUseCase {
     description,
     name,
     specie,
+    age
   }: RegisterPetUseCaseRequest): Promise<RegisterPetUseCaseResponse> {
     try {
       const pet = await this.petsRepository.create(
-        {specie,breed,description,name, org_id: orgId }
+        {specie,breed,description,name, org_id: orgId,age,}
       );
       return {
         pet,
