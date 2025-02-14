@@ -19,6 +19,7 @@ export class InMemoryUsersRepository implements UsersRepository {
             password_hash: data.password_hash,
             sex: data.sex ?? null,
             updated_at: null,
+            role: 'USER'
         }
 
         this.users.push(user);

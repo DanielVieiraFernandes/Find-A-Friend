@@ -29,11 +29,11 @@ describe('Authenticate Org Test', () => {
         })
 
         const response = await sut.execute({
-            orgId: org.id
+            email: org.email
         })
 
 
-        expect(response.org).toEqual(expect.objectContaining({
+        expect(response.updateOrg).toEqual(expect.objectContaining({
             description: 'Tanto faz',
             name: 'Org-01',
             phone: '19989993437',
@@ -45,7 +45,7 @@ describe('Authenticate Org Test', () => {
     it('Should be able error in authenticate Org', async () => {
 
         await expect(() => sut.execute({
-            orgId: 'org-id'
+            email: 'noexistemail@gmail.com'
         })).rejects.toBeInstanceOf(InvalidCredentialsError)
 
     })

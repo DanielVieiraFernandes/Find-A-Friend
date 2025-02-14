@@ -1,8 +1,9 @@
 import { MakeUserRegisterUseCase } from "../../../use-cases/factories/MakeUserRegisterUseCase";
 import { FastifyReply, FastifyRequest } from "fastify";
+import { UserHaveExistsError } from "src/use-cases/errors/user-have-exists-error";
 import { z } from "zod";
-export async function register(req: FastifyRequest, res: FastifyReply) {
 
+export async function register(req: FastifyRequest, res: FastifyReply) {
 
     const registerUserBodySchema = z.object({
         name: z.string(),
@@ -14,35 +15,52 @@ export async function register(req: FastifyRequest, res: FastifyReply) {
         city: z.string(),
     })
 
-    const { age, city, email, name, password, sex, address } = registerUserBodySchema.parse(req.body)
+    const { age, city, email, name, password, sex, address } = registerUserBodySchema.parse(req.body);
 
     const registerUser = MakeUserRegisterUseCase();
 
-    const { user } = await registerUser.execute({
-        age, email, name, password, sex, city, address,
-    })
+    try {
+        const { user } = await registerUser.execute({
+            age, email, name, password, sex, city, address,
+        })
 
-    const token = await res.jwtSign({
-        role: user.role
-    }, {
-        sign: {
-            sub: user.id,
+        const token = await res.jwtSign({
+            role: user.role
+        }, {
+            sign: {
+                sub: user.id,
+            }
+        })
+
+        const refreshToken = await res.jwtSign({
+            role: user.role
+        }, {
+            sign: {
+                sub: user.id,
+                expiresIn: '1d'
+            }
+        })
+
+        res.status(200).setCookie('refreshToken', refreshToken, {
+            path: '/',
+            secure: true,
+            sameSite: true,
+            httpOnly: true,
+        }).send({
+            user,
+            token,
+            refreshToken,
+        })
+    } catch (error) {
+
+        if (error instanceof UserHaveExistsError) {
+            res.status(409).send({
+                message: error.message
+            })
         }
-    })
 
-    const refreshToken = await res.jwtSign({
-        role: user.role
-    }, {
-        sign: {
-            sub: user.id,
-            expiresIn: '1d'
-        }
-    })
+        throw error;
 
-    res.status(200).send({
-        user,
-        token,
-        refreshToken,
-    })
+    }
 
 }

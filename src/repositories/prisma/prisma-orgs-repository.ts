@@ -20,4 +20,18 @@ export class PrismaOrgsRepository implements OrgRepository {
 
         return org;
     }
+
+    async save(org:Partial<Org>){
+        const updateOrg = await prisma.org.update({
+            where: {
+                id: org.id
+            },
+            data:{
+                ...org
+            }
+        })
+
+
+        return updateOrg;
+    }
 }

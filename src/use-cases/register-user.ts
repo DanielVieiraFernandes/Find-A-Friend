@@ -20,7 +20,7 @@ interface RegisterUserUseCaseRequest {
 }
 
 interface RegisterUserUseCaseResponse {
-    user: User;
+    user: Omit<User, 'password_hash' | 'updated_at' | 'created_at'>;
 }
 
 export class RegisterUserUseCase {

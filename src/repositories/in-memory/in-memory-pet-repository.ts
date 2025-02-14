@@ -3,6 +3,9 @@ import { PetsRepository } from "../pets-repository";
 import { randomUUID } from "node:crypto";
 
 export class InMemoryPetRepository implements PetsRepository {
+    findByCity(city: string, page: number): Promise<Pet[] | null> {
+        throw new Error("Method not implemented.");
+    }
 
     public pets: Pet[] = [];
 
@@ -24,4 +27,6 @@ export class InMemoryPetRepository implements PetsRepository {
 
         return pet;
     }
+
+
 }
