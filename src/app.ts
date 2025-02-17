@@ -31,6 +31,13 @@ app.setErrorHandler((error, _, res) => {
         })
     }
 
+    if (error.code && error.code.startsWith('FST_JWT')) {
+        return res.status(error.statusCode || 401).send({
+            message: error.message,
+            code: error.code
+        });
+    }
+
     return res.status(500).send({
         message: 'Internal server error'
     })
