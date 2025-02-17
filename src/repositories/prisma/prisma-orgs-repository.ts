@@ -3,14 +3,26 @@ import { OrgRepository } from "../orgs-repository";
 import { Prisma, Org } from "@prisma/client";
 
 export class PrismaOrgsRepository implements OrgRepository {
-    findById(orgId: string): Promise<Org | null> {
+    async findById(orgId: string): Promise<Org | null> {
         throw new Error("Method not implemented.");
     }
-    findByPhone(phone: string): Promise<Org | null> {
-        throw new Error("Method not implemented.");
+    async findByPhone(phone: string): Promise<Org | null> {
+        const org = await prisma.org.findUnique({
+            where:{
+                phone,
+            }
+        })
+
+        return org;
     }
-    findByEmail(email: string): Promise<Org | null> {
-        throw new Error("Method not implemented.");
+    async findByEmail(email: string): Promise<Org | null> {
+        const org = await prisma.org.findUnique({
+            where:{
+                email,
+            }
+        })
+
+        return org;
     }
     async create(data: Prisma.OrgCreateInput) {
         const org = await prisma.org.create({

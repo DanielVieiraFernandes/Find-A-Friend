@@ -14,7 +14,7 @@ describe('Authenticate Org Test', () => {
         sut = new AuthenticateOrgUseCase(orgRepository);
     });
 
-    it('Should be able authemticate Org', async () => {
+    it('Should be able authenticate Org', async () => {
 
         const org = await orgRepository.create({
             description: 'Tanto faz',
@@ -29,15 +29,15 @@ describe('Authenticate Org Test', () => {
         })
 
         const response = await sut.execute({
-            email: org.email
+            email: 'daniel@gmail.com',
+            password: '123456'
         })
 
 
-        expect(response.updateOrg).toEqual(expect.objectContaining({
+        expect(response.org).toEqual(expect.objectContaining({
             description: 'Tanto faz',
             name: 'Org-01',
             phone: '19989993437',
-            password_hash: '123456',
         }))
 
     })
@@ -45,7 +45,8 @@ describe('Authenticate Org Test', () => {
     it('Should be able error in authenticate Org', async () => {
 
         await expect(() => sut.execute({
-            email: 'noexistemail@gmail.com'
+            email: 'noexistemail@gmail.com',
+            password: 'withoutpassword'
         })).rejects.toBeInstanceOf(InvalidCredentialsError)
 
     })

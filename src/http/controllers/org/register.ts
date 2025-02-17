@@ -1,5 +1,6 @@
 import { MakeOrgRegisterUseCase } from "../../../use-cases/factories/MakeOrgRegisterUseCase";
 import { FastifyReply, FastifyRequest } from "fastify";
+import { OrgHaveExistsError } from "src/use-cases/errors/org-have-exists-error";
 import { z } from "zod";
 
 export async function register(req: FastifyRequest, res: FastifyReply) {
@@ -47,9 +48,17 @@ export async function register(req: FastifyRequest, res: FastifyReply) {
         }).send({
             org,
             token,
+            refreshToken
         })
 
     } catch (error) {
+
+        if(error instanceof OrgHaveExistsError){
+            return res.status(409).send({
+                message: error.message
+            })
+        }
+
         throw error;
     }
 

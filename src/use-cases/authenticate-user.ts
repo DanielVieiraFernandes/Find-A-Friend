@@ -9,7 +9,7 @@ interface AuthenticateUserUseCaseRequest {
 }
 
 interface AuthenticateUserUseCaseResponse {
-    user: User;
+    user: Omit<User, 'password_hash' | 'created_at' | 'updated_at'>;
 }
 
 export class AuthenticateUserUseCase {
@@ -18,17 +18,19 @@ export class AuthenticateUserUseCase {
 
     async execute({ email, password }: AuthenticateUserUseCaseRequest): Promise<AuthenticateUserUseCaseResponse> {
 
-        const user = await this.usersRepository.findByEmail(email);
+        const findUser = await this.usersRepository.findByEmail(email);
 
-        if (!user) {
+        if (!findUser) {
             throw new InvalidCredentialsError()
         };
 
-        const doesPasswordMatches = await compare(password, user.password_hash);
+        const doesPasswordMatches = await compare(password, findUser.password_hash);
 
         if (!doesPasswordMatches) {
             throw new InvalidCredentialsError();
         };
+
+        const {password_hash,created_at,updated_at, ...user} = findUser;
 
 
         return { user };

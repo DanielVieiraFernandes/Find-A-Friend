@@ -50,7 +50,8 @@ export async function register(req: FastifyRequest, res: FastifyReply) {
             user,
             token,
             refreshToken,
-        })
+        });
+        
     } catch (error) {
 
         if (error instanceof UserHaveExistsError) {
